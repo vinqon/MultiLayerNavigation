@@ -14,7 +14,6 @@
 @interface MLNavigationController ()
 {
     CGPoint startTouch;
-    BOOL isMoving;
     
     UIImageView *lastScreenShotView;
     UIView *blackMask;
@@ -134,7 +133,7 @@
     
     if (self.viewControllers.count <= 1 || !self.canDragBack) return;
     
-    isMoving = NO;
+    _isMoving = NO;
     startTouch = [((UITouch *)[touches anyObject])locationInView:KEY_WINDOW];
 }
 
@@ -147,13 +146,11 @@
     if (self.viewControllers.count <= 1 || !self.canDragBack) return;
     
     CGPoint moveTouch = [((UITouch *)[touches anyObject])locationInView:KEY_WINDOW];
-
     
-    
-    if (!isMoving) {
+    if (!_isMoving) {
         if(moveTouch.x - startTouch.x > 10)
         {
-            isMoving = YES;
+            _isMoving = YES;
             
             if (!self.backgroundView)
             {
@@ -176,7 +173,7 @@
         }
     }
     
-    if (isMoving) {
+    if (_isMoving) {
         [self moveViewWithX:moveTouch.x - startTouch.x];
     }
 }
@@ -184,7 +181,6 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 //    NSLog(@"navi touch end");
-
     
     [super touchesEnded:touches withEvent:event];
     
@@ -202,9 +198,8 @@
             CGRect frame = self.view.frame;
             frame.origin.x = 0;
             self.view.frame = frame;
-            NSLog(@"Show the pop vc");
 
-            isMoving = NO;
+            _isMoving = NO;
         }];
     }
     else
@@ -212,7 +207,7 @@
         [UIView animateWithDuration:0.3 animations:^{
             [self moveViewWithX:0];
         } completion:^(BOOL finished) {
-            isMoving = NO;
+            _isMoving = NO;
         }];
 
     }
@@ -221,7 +216,6 @@
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
 //    NSLog(@"navi touch cancel");
-
     
     [super touchesCancelled:touches withEvent:event];
     
@@ -230,7 +224,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         [self moveViewWithX:0];
     } completion:^(BOOL finished) {
-        isMoving = NO;
+        _isMoving = NO;
     }];
 }
 

@@ -11,5 +11,6 @@
 @interface MLNavigationController : UINavigationController
 
 @property (nonatomic,assign) BOOL canDragBack;
+@property (nonatomic,assign) BOOL isMoving;
 
 @end

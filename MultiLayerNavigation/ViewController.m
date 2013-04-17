@@ -39,24 +39,21 @@
     
     UILabel *textView = [[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 180)]autorelease];
     textView.font = [UIFont systemFontOfSize:12];
-    textView.text = @"Introduction:\n MultiLayerNavigation helps you implemntation the interaction -- 'drag to back' in a easy way.\n The only one thing you need to do is replacing your UINavigationController with the MLNavigation Controller. \n In addtion, if there are a scroll view in your ViewController, you need to do one more thing -- replace the UIScrollView with MLScrollView or inherit it, that's all.";
+    textView.text = @"MultiLayerNavigation helps you implemntation the interaction -- 'drag to back' in a easy way.\n The only one thing you need to do is replacing your UINavigationController with the MLNavigation Controller or inherit it. \n In addtion, if there are a scroll view in your ViewController, you need to do one more thing -- replace the UIScrollView with MLScrollView or inherit it, that's all.";
     textView.numberOfLines = 0;
 
     
-    MLScrollView *scrollView = [[[MLScrollView alloc]initWithFrame:CGRectMake(0,300,320,140)]autorelease];
-    scrollView.contentSize = CGSizeMake(320, 200);
-    scrollView.userInteractionEnabled = YES;
-    [scrollView addSubview:textView];
-    [self.view addSubview:scrollView];
+//    MLScrollView *scrollView = [[[MLScrollView alloc]initWithFrame:CGRectMake(0,300,320,140)]autorelease];
+//    scrollView.contentSize = CGSizeMake(320, 200);
+//    scrollView.userInteractionEnabled = YES;
+//    [scrollView addSubview:textView];
+//    [self.view addSubview:scrollView];
     
-}
-
-- (void)pressBtn:(UIButton *)sender
-{
-
-    ViewController *vc = [[[ViewController alloc]init]autorelease];
-    [self.navigationController pushViewController:vc animated:YES];
-
+    MLTableView *tableView = [[[MLTableView alloc]initWithFrame:CGRectMake(0, 300, 320, 140)]autorelease];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    [self.view addSubview:tableView];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,11 +62,26 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+#pragma mark - User Interaction -
+
+- (void)pressBtn:(UIButton *)sender
 {
-    [super touchesMoved:touches withEvent:event];
     
-    NSLog(@"view move");
+    ViewController *vc = [[[ViewController alloc]init]autorelease];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+#pragma mark - UITableView Datasource & Delegate -
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"id"]autorelease];
 }
 
 

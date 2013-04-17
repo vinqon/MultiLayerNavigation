@@ -19,6 +19,7 @@
 		67C603181717C6A500629C0E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C603171717C6A500629C0E /* ViewController.m */; };
 		67C6031B1717C6A500629C0E /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67C603191717C6A500629C0E /* ViewController.xib */; };
 		67C603251717DE5A00629C0E /* leftside_shadow_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C603241717DE5A00629C0E /* leftside_shadow_bg@2x.png */; };
+		67D2EA04171E415800071E64 /* MLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67D2EA03171E415800071E64 /* MLTableView.m */; };
 		67F1E622171D11C800A8CE9F /* MLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F1E61F171D11C800A8CE9F /* MLNavigationController.m */; };
 		67F1E623171D11C800A8CE9F /* MLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F1E621171D11C800A8CE9F /* MLScrollView.m */; };
 /* End PBXBuildFile section */
@@ -41,6 +42,8 @@
 		67C603171717C6A500629C0E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		67C6031A1717C6A500629C0E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		67C603241717DE5A00629C0E /* leftside_shadow_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leftside_shadow_bg@2x.png"; sourceTree = "<group>"; };
+		67D2EA02171E415800071E64 /* MLTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLTableView.h; sourceTree = "<group>"; };
+		67D2EA03171E415800071E64 /* MLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLTableView.m; sourceTree = "<group>"; };
 		67F1E61E171D11C800A8CE9F /* MLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLNavigationController.h; sourceTree = "<group>"; };
 		67F1E61F171D11C800A8CE9F /* MLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLNavigationController.m; sourceTree = "<group>"; };
 		67F1E620171D11C800A8CE9F /* MLScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLScrollView.h; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 				67F1E61F171D11C800A8CE9F /* MLNavigationController.m */,
 				67F1E620171D11C800A8CE9F /* MLScrollView.h */,
 				67F1E621171D11C800A8CE9F /* MLScrollView.m */,
+				67D2EA02171E415800071E64 /* MLTableView.h */,
+				67D2EA03171E415800071E64 /* MLTableView.m */,
 			);
 			path = Src;
 			sourceTree = SOURCE_ROOT;
@@ -200,6 +205,7 @@
 				67C603181717C6A500629C0E /* ViewController.m in Sources */,
 				67F1E622171D11C800A8CE9F /* MLNavigationController.m in Sources */,
 				67F1E623171D11C800A8CE9F /* MLScrollView.m in Sources */,
+				67D2EA04171E415800071E64 /* MLTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,7 +255,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -272,7 +278,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -285,7 +291,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MultiLayerNavigation/MultiLayerNavigation-Prefix.pch";
 				INFOPLIST_FILE = "MultiLayerNavigation/MultiLayerNavigation-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -297,7 +303,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MultiLayerNavigation/MultiLayerNavigation-Prefix.pch";
 				INFOPLIST_FILE = "MultiLayerNavigation/MultiLayerNavigation-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

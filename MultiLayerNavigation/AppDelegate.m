@@ -24,6 +24,7 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     
+    
     ViewController *viewCtrl = [[[ViewController alloc]init]autorelease];
     
     MLNavigationController *navCtrl = [[[MLNavigationController alloc]initWithRootViewController:viewCtrl]autorelease];
