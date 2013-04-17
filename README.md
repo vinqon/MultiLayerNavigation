@@ -14,10 +14,11 @@ In addtion, if there are a UIScrollView in your ViewController, you need to do o
 ![Demo](http://code4app.qiniudn.com/photo/516ce1f76803fa5034000001_12.png)
 
 
-##已知问题 / Known Issues
+##已知问题
 1. 尚未完全支持所有可滚动的view(UIWebView/UITextView);
 2. 只能使用push/pop系列方法来切换viewcontroller,不能直接调用setViewControllers设置;
-###
+
+##Known Issues
 1. NOT fully support all scrollable view (UIWebView/UITextView) yet;
 2. NOT support using setViewControllers method to swicth viewcontroller.
 
