@@ -8,7 +8,6 @@
 
 #import "ViewController.h"
 #import "MLNavigationController.h"
-#import "MLScrollView.h"
 
 @interface ViewController ()
 
@@ -39,20 +38,20 @@
     
     UILabel *textView = [[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 180)]autorelease];
     textView.font = [UIFont systemFontOfSize:12];
-    textView.text = @"MultiLayerNavigation helps you implemntation the interaction -- 'drag to back' in a easy way.\n The only one thing you need to do is replacing your UINavigationController with the MLNavigation Controller or inherit it. \n In addtion, if there are a scroll view in your ViewController, you need to do one more thing -- replace the UIScrollView with MLScrollView or inherit it, that's all.";
+    textView.text = @"MultiLayerNavigation helps you implemntation the interaction -- 'drag to back' in a easy way.\n The only one thing you need to do is replacing your UINavigationController with the MLNavigation Controller or inherit it.";
     textView.numberOfLines = 0;
 
     
-//    MLScrollView *scrollView = [[[MLScrollView alloc]initWithFrame:CGRectMake(0,300,320,140)]autorelease];
-//    scrollView.contentSize = CGSizeMake(320, 200);
-//    scrollView.userInteractionEnabled = YES;
-//    [scrollView addSubview:textView];
-//    [self.view addSubview:scrollView];
+    UIScrollView *scrollView = [[[UIScrollView alloc]initWithFrame:CGRectMake(0,300,320,140)]autorelease];
+    scrollView.contentSize = CGSizeMake(320, 200);
+    scrollView.userInteractionEnabled = YES;
+    [scrollView addSubview:textView];
+    [self.view addSubview:scrollView];
     
-    MLTableView *tableView = [[[MLTableView alloc]initWithFrame:CGRectMake(0, 300, 320, 140)]autorelease];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [self.view addSubview:tableView];
+//    UITableView *tableView = [[[UITableView alloc]initWithFrame:CGRectMake(0, 300, 320, 140)]autorelease];
+//    tableView.delegate = self;
+//    tableView.dataSource = self;
+//    [self.view addSubview:tableView];
     
 }
 

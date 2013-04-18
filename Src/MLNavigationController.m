@@ -68,7 +68,10 @@
     shadowImageView.frame = CGRectMake(-10, 0, 10, self.view.frame.size.height);
     [self.view addSubview:shadowImageView];
     
-
+    UIPanGestureRecognizer *recognizer = [[[UIPanGestureRecognizer alloc]initWithTarget:self
+                                                                                 action:@selector(paningGestureReceive:)]autorelease];
+    [recognizer delaysTouchesBegan];
+    [self.view addGestureRecognizer:recognizer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,7 +111,7 @@
 
 - (void)moveViewWithX:(float)x
 {
-
+    NSLog(@"Move to:%f",x);
     x = x>320?320:x;
     x = x<0?0:x;
     
@@ -124,108 +127,78 @@
     
 }
 
-#pragma mark - UIResponse Subclassing Methods -
+#pragma mark - Gesture Recognizer -
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)paningGestureReceive:(UIPanGestureRecognizer *)recoginzer
 {
-//    NSLog(@"navi touch begin");
-    [super touchesBegan:touches withEvent:event];
-    
     if (self.viewControllers.count <= 1 || !self.canDragBack) return;
     
-    _isMoving = NO;
-    startTouch = [((UITouch *)[touches anyObject])locationInView:KEY_WINDOW];
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [super touchesMoved:touches withEvent:event];
+    CGPoint touchPoint = [recoginzer locationInView:KEY_WINDOW];
     
-//    NSLog(@"navi touch move:%f",[((UITouch *)[touches anyObject])locationInView:KEY_WINDOW].x);
-
-    if (self.viewControllers.count <= 1 || !self.canDragBack) return;
-    
-    CGPoint moveTouch = [((UITouch *)[touches anyObject])locationInView:KEY_WINDOW];
-    
-    if (!_isMoving) {
-        if(moveTouch.x - startTouch.x > 10)
+    if (recoginzer.state == UIGestureRecognizerStateBegan) {
+        
+        _isMoving = YES;
+        startTouch = touchPoint;
+        
+        if (!self.backgroundView)
         {
-            _isMoving = YES;
-            
-            if (!self.backgroundView)
-            {
-                CGRect frame = self.view.frame;
-                
-                self.backgroundView = [[[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)]autorelease];
-                [self.view.superview insertSubview:self.backgroundView belowSubview:self.view];
-                
-                blackMask = [[[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)]autorelease];
-                blackMask.backgroundColor = [UIColor blackColor];
-                [self.backgroundView addSubview:blackMask];
-            }
-            
-            if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
-            
-            UIImage *lastScreenShot = [self.screenShotsList lastObject];
-            lastScreenShotView = [[[UIImageView alloc]initWithImage:lastScreenShot]autorelease];
-            [self.backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
-
-        }
-    }
-    
-    if (_isMoving) {
-        [self moveViewWithX:moveTouch.x - startTouch.x];
-    }
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-//    NSLog(@"navi touch end");
-    
-    [super touchesEnded:touches withEvent:event];
-    
-    if (self.viewControllers.count <= 1 || !self.canDragBack) return;
-
-    CGPoint endTouch = [((UITouch *)[touches anyObject])locationInView:KEY_WINDOW];
-
-    if (endTouch.x - startTouch.x > 50)
-    {
-        [UIView animateWithDuration:0.3 animations:^{
-            [self moveViewWithX:320];
-        } completion:^(BOOL finished) {
-
-            [self popViewControllerAnimated:NO];
             CGRect frame = self.view.frame;
-            frame.origin.x = 0;
-            self.view.frame = frame;
-
-            _isMoving = NO;
-        }];
-    }
-    else
-    {
+            
+            self.backgroundView = [[[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)]autorelease];
+            [self.view.superview insertSubview:self.backgroundView belowSubview:self.view];
+            
+            blackMask = [[[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)]autorelease];
+            blackMask.backgroundColor = [UIColor blackColor];
+            [self.backgroundView addSubview:blackMask];
+        }
+        
+        if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
+        
+        UIImage *lastScreenShot = [self.screenShotsList lastObject];
+        lastScreenShotView = [[[UIImageView alloc]initWithImage:lastScreenShot]autorelease];
+        [self.backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
+        
+    }else if (recoginzer.state == UIGestureRecognizerStateEnded){
+        
+        if (touchPoint.x - startTouch.x > 50)
+        {
+            [UIView animateWithDuration:0.3 animations:^{
+                [self moveViewWithX:320];
+            } completion:^(BOOL finished) {
+                
+                [self popViewControllerAnimated:NO];
+                CGRect frame = self.view.frame;
+                frame.origin.x = 0;
+                self.view.frame = frame;
+                
+                _isMoving = NO;
+            }];
+        }
+        else
+        {
+            [UIView animateWithDuration:0.3 animations:^{
+                [self moveViewWithX:0];
+            } completion:^(BOOL finished) {
+                _isMoving = NO;
+            }];
+            
+        }
+        return;
+        
+    }else if (recoginzer.state == UIGestureRecognizerStateCancelled){
+        
         [UIView animateWithDuration:0.3 animations:^{
             [self moveViewWithX:0];
         } completion:^(BOOL finished) {
             _isMoving = NO;
         }];
-
+        
+        return;
     }
-}
-
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
-{
-//    NSLog(@"navi touch cancel");
     
-    [super touchesCancelled:touches withEvent:event];
-    
-    if (self.viewControllers.count <= 1 || !self.canDragBack) return;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        [self moveViewWithX:0];
-    } completion:^(BOOL finished) {
-        _isMoving = NO;
-    }];
+    if (_isMoving) {
+        [self moveViewWithX:touchPoint.x - startTouch.x];
+    }
 }
 
 @end
