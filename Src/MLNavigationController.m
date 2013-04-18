@@ -152,6 +152,8 @@
             [self.backgroundView addSubview:blackMask];
         }
         
+        self.backgroundView.hidden = NO;
+        
         if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
         
         UIImage *lastScreenShot = [self.screenShotsList lastObject];
@@ -180,6 +182,7 @@
                 [self moveViewWithX:0];
             } completion:^(BOOL finished) {
                 _isMoving = NO;
+                self.backgroundView.hidden = YES;
             }];
             
         }
@@ -191,6 +194,7 @@
             [self moveViewWithX:0];
         } completion:^(BOOL finished) {
             _isMoving = NO;
+            self.backgroundView.hidden = YES;
         }];
         
         return;
