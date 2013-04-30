@@ -22,6 +22,8 @@
 @property (nonatomic,retain) UIView *backgroundView;
 @property (nonatomic,retain) NSMutableArray *screenShotsList;
 
+@property (nonatomic,assign) BOOL isMoving;
+
 @end
 
 @implementation MLNavigationController
@@ -80,6 +82,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+// override the push method
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     [self.screenShotsList addObject:[self capture]];
@@ -87,6 +90,7 @@
     [super pushViewController:viewController animated:animated];
 }
 
+// override the pop method
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated
 {
     [self.screenShotsList removeLastObject];
@@ -109,8 +113,10 @@
     return img;
 }
 
+// set lastScreenShotView 's position and alpha when paning
 - (void)moveViewWithX:(float)x
 {
+    
     NSLog(@"Move to:%f",x);
     x = x>320?320:x;
     x = x<0?0:x;
@@ -131,10 +137,13 @@
 
 - (void)paningGestureReceive:(UIPanGestureRecognizer *)recoginzer
 {
+    // If the viewControllers has only one vc or disable the interaction, then return.
     if (self.viewControllers.count <= 1 || !self.canDragBack) return;
     
+    // we get the touch position by the window's coordinate
     CGPoint touchPoint = [recoginzer locationInView:KEY_WINDOW];
     
+    // begin paning, show the backgroundView(last screenshot),if not exist, create it.
     if (recoginzer.state == UIGestureRecognizerStateBegan) {
         
         _isMoving = YES;
@@ -160,6 +169,7 @@
         lastScreenShotView = [[[UIImageView alloc]initWithImage:lastScreenShot]autorelease];
         [self.backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
         
+        //End paning, always check that if it should move right or move left automatically
     }else if (recoginzer.state == UIGestureRecognizerStateEnded){
         
         if (touchPoint.x - startTouch.x > 50)
@@ -188,6 +198,7 @@
         }
         return;
         
+        // cancal panning, alway move to left side automatically
     }else if (recoginzer.state == UIGestureRecognizerStateCancelled){
         
         [UIView animateWithDuration:0.3 animations:^{
@@ -200,6 +211,7 @@
         return;
     }
     
+    // it keeps move with touch
     if (_isMoving) {
         [self moveViewWithX:touchPoint.x - startTouch.x];
     }
