@@ -7,6 +7,8 @@
 //
 
 #define KEY_WINDOW  [[UIApplication sharedApplication]keyWindow]
+#define TOP_VIEW  [[UIApplication sharedApplication]keyWindow].rootViewController.view
+
 
 #import "MLNavigationController.h"
 #import <QuartzCore/QuartzCore.h>
@@ -67,8 +69,8 @@
     //self.view.layer.shadowOpacity = 1;
     
     UIImageView *shadowImageView = [[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"leftside_shadow_bg"]]autorelease];
-    shadowImageView.frame = CGRectMake(-10, 0, 10, self.view.frame.size.height);
-    [self.view addSubview:shadowImageView];
+    shadowImageView.frame = CGRectMake(-10, 0, 10, TOP_VIEW.frame.size.height);
+    [TOP_VIEW addSubview:shadowImageView];
     
     UIPanGestureRecognizer *recognizer = [[[UIPanGestureRecognizer alloc]initWithTarget:self
                                                                                  action:@selector(paningGestureReceive:)]autorelease];
@@ -82,11 +84,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:(BOOL)animated];
+    
+    if (self.screenShotsList.count == 0) {
+        
+        UIImage *capturedImage = [self capture];
+        
+        if (capturedImage) {
+            [self.screenShotsList addObject:capturedImage];
+        }
+    }
+}
+
 // override the push method
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    [self.screenShotsList addObject:[self capture]];
+    UIImage *capturedImage = [self capture];
     
+    if (capturedImage) {
+        [self.screenShotsList addObject:capturedImage];
+    }
+
     [super pushViewController:viewController animated:animated];
 }
 
@@ -103,8 +123,8 @@
 // get the current view screen shot
 - (UIImage *)capture
 {
-    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, self.view.opaque, 0.0);
-    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIGraphicsBeginImageContextWithOptions(TOP_VIEW.bounds.size, TOP_VIEW.opaque, 0.0);
+    [TOP_VIEW.layer renderInContext:UIGraphicsGetCurrentContext()];
     
     UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
     
@@ -121,9 +141,9 @@
     x = x>320?320:x;
     x = x<0?0:x;
     
-    CGRect frame = self.view.frame;
+    CGRect frame = TOP_VIEW.frame;
     frame.origin.x = x;
-    self.view.frame = frame;
+    TOP_VIEW.frame = frame;
     
     float scale = (x/6400)+0.95;
     float alpha = 0.4 - (x/800);
@@ -151,10 +171,10 @@
         
         if (!self.backgroundView)
         {
-            CGRect frame = self.view.frame;
+            CGRect frame = TOP_VIEW.frame;
             
             self.backgroundView = [[[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)]autorelease];
-            [self.view.superview insertSubview:self.backgroundView belowSubview:self.view];
+            [TOP_VIEW.superview insertSubview:self.backgroundView belowSubview:TOP_VIEW];
             
             blackMask = [[[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)]autorelease];
             blackMask.backgroundColor = [UIColor blackColor];
@@ -179,11 +199,13 @@
             } completion:^(BOOL finished) {
                 
                 [self popViewControllerAnimated:NO];
-                CGRect frame = self.view.frame;
+                CGRect frame = TOP_VIEW.frame;
                 frame.origin.x = 0;
-                self.view.frame = frame;
+                TOP_VIEW.frame = frame;
                 
                 _isMoving = NO;
+                self.backgroundView.hidden = YES;
+
             }];
         }
         else

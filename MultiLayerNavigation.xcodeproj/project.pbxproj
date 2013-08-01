@@ -264,11 +264,15 @@
 		67C6031F1717C6A500629C0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yongcong Chen (QB4AN98KG2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yongcong Chen (QB4AN98KG2)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MultiLayerNavigation/MultiLayerNavigation-Prefix.pch";
 				INFOPLIST_FILE = "MultiLayerNavigation/MultiLayerNavigation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "66832B8B-3F67-46BA-B5C5-00C7D63B6274";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "66832B8B-3F67-46BA-B5C5-00C7D63B6274";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -276,11 +280,13 @@
 		67C603201717C6A500629C0E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yongcong Chen (QB4AN98KG2)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MultiLayerNavigation/MultiLayerNavigation-Prefix.pch";
 				INFOPLIST_FILE = "MultiLayerNavigation/MultiLayerNavigation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "66832B8B-3F67-46BA-B5C5-00C7D63B6274";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -24,12 +24,23 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     
-    
-    ViewController *viewCtrl = [[[ViewController alloc]init]autorelease];
-    
-    MLNavigationController *navCtrl = [[[MLNavigationController alloc]initWithRootViewController:viewCtrl]autorelease];
 
-    self.window.rootViewController = navCtrl;
+    ViewController *vc = [[[ViewController alloc]init]autorelease];
+    vc.tabBarItem = [[[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemFeatured tag:1]autorelease];
+    MLNavigationController *nacVC = [[[MLNavigationController alloc]initWithRootViewController:vc]autorelease];
+    nacVC.title = @"Feature";
+    
+    ViewController *vc2 = [[[ViewController alloc]init]autorelease];
+    vc2.tabBarItem = [[[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemMore tag:2]autorelease];
+    MLNavigationController *nacVC2 = [[[MLNavigationController alloc]initWithRootViewController:vc2]autorelease];
+    nacVC2.title = @"More";
+
+    
+    UITabBarController *tabBarCtrl = [[[UITabBarController alloc]init]autorelease];
+    
+    tabBarCtrl.viewControllers = @[nacVC,nacVC2];
+    
+    self.window.rootViewController = tabBarCtrl;
     [self.window makeKeyAndVisible];
     return YES;
 }
