@@ -74,6 +74,7 @@
     
     UIPanGestureRecognizer *recognizer = [[[UIPanGestureRecognizer alloc]initWithTarget:self
                                                                                  action:@selector(paningGestureReceive:)]autorelease];
+    recognizer.delegate = self;
     [recognizer delaysTouchesBegan];
     [self.view addGestureRecognizer:recognizer];
 }
@@ -151,6 +152,13 @@
     lastScreenShotView.transform = CGAffineTransformMakeScale(scale, scale);
     blackMask.alpha = alpha;
     
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if (self.viewControllers.count <= 1 || !self.canDragBack) return NO;
+    
+    return YES;
 }
 
 #pragma mark - Gesture Recognizer -
